@@ -1,0 +1,219 @@
+mixed-port: 7890 # 混合端口，HTTP和SOCKS5用一个端口
+allow-lan: true # 允许局域网的连接（共享代理）
+bind-address: "*" # 监听IP白名单，可绑定单个IPv4和v6地址，"*" 为绑定所有IP地址，仅在将allow-lan设置为true时适用
+ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
+mode: rule # 规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
+log-level: info # 设置日志输出级别 (5 个级别：silent / error / warning / info / debug）
+external-controller: 127.0.0.1:9090 # 外部控制器监听地址，可以使用 RESTful API 来控制你的 clash 内核
+dns:
+  enable: true # 关闭将使用系统 DNS
+  ipv6: true # IPV6解析开关；如果为false，将返回ipv6结果为空
+  enhanced-mode: fake-ip # 模式：redir-host或fake-ip
+  listen: 0.0.0.0:53 # DNS 监听地址
+  default-nameserver: [223.5.5.5, 119.29.29.29]
+  # 解析非IP的dns用的dns服务器，只支持纯IP
+  nameserver: ['https://223.5.5.5/dns-query', 'https://1.12.12.12/dns-query']
+  # 默认DNS服务器，支持udp/tcp/dot/doh/doq
+
+  fake-ip-range: 198.18.0.1/16 # Fake-IP 解析地址池
+  fake-ip-filter: ['*.lan', cable.auth.com, '*.msftconnecttest.com', '*.msftncsi.com', network-test.debian.org, detectportal.firefox.com, resolver1.opendns.com, '*.srv.nintendo.net', '*.stun.playstation.net', xbox.*.microsoft.com, '*.xboxlive.com', stun.*, global.turn.twilio.com, global.stun.twilio.com, localhost.*.qq.com, localhost.*.weixin.qq.com, '*.logon.battlenet.com.cn', '*.logon.battle.net', '*.blzstatic.cn', music.163.com, '*.music.163.com', '*.126.net', musicapi.taihe.com, music.taihe.com, songsearch.kugou.com, trackercdn.kugou.com, '*.kuwo.cn', api-jooxtt.sanook.com, api.joox.com, joox.com, y.qq.com, '*.y.qq.com', streamoc.music.tc.qq.com, mobileoc.music.tc.qq.com, isure.stream.qqmusic.qq.com, dl.stream.qqmusic.qq.com, aqqmusic.tc.qq.com, amobile.music.tc.qq.com, '*.xiami.com', '*.music.migu.cn', music.migu.cn, proxy.golang.org, '*.mcdn.bilivideo.cn', '*.cmpassport.com', id6.me, open.e.189.cn, mdn.open.wo.cn, opencloud.wostore.cn, auth.wosms.cn, '*.jegotrip.com.cn', '*.icitymobile.mobi', '*.pingan.com.cn', '*.cmbchina.com', pool.ntp.org, '*.pool.ntp.org', ntp.*.com, time.*.com, 'ntp?.*.com', 'time?.*.com', time.*.gov, time.*.edu.cn, '*.ntp.org.cn', PDC._msDCS.*.*, DC._msDCS.*.*, GC._msDCS.*.*]
+  # Fake-ip 过滤，列表中的域名返回真实IP
+######### 锚点 start #########
+
+# 规则行为相关
+c: &c {type: http, behavior: classical, interval: 86400, format: text}
+d: &d {type: http, behavior: domain, interval: 86400, format: text}
+i: &i {type: http, behavior: ipcidr, interval: 86400, format: text}
+# 代理组相关
+g: &g {type: select, proxies: [Proxy, Auto, Fallback, HongKong, TaiWan, Singapore, Japan, America, Korea, UK, DIRECT]}
+# 远程订阅相关
+p: &p {type: http, interval: 42300, health-check: {enable: true, url: 'http://www.apple.com/library/test/success.html', interval: 600}}
+# 订阅引用相关
+u: &u {type: select, use: [Subscribe]}
+######### 锚点 end #########
+
+# 本地服务器
+proxies: null
+# 远程订阅
+proxy-providers:
+  Gecko: {!!merge <<: *p, path: ./proxy_providers/subscribe.yaml, url: "http://www.geckopath.com/api/v1/client/subscribe?token=967aeb6cc4cc57ee5bd6057351b63e86", benchmark-url: 'http://www.apple.com/library/test/success.html', interval: 42300}
+# 1. 请使用Clash类型订阅链接填入引号""内使用,
+# 2. 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
+
+# 代理组
+proxy-groups:
+  # 节点切换 Proxy
+  - {name: Proxy, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Rocket.png', !!merge <<: *g, proxies: [America, TaiWan, Singapore, HongKong, Japan, Korea, UK], type: select}
+  # 自动选择 Auto
+  - {name: Auto, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Auto.png', type: url-test, lazy: true, !!merge <<: *u, use: [DaWang, Gecko]}
+  # 故障转移 Fallback
+  - {name: Fallback, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Available.png', type: fallback, !!merge <<: *u, use: [DaWang, Gecko], proxies: null}
+  # 漏网之鱼 Final
+  - {name: Final, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Final.png', !!merge <<: *g, proxies: [Proxy, DIRECT]}
+  # 国外网站 Global
+  - {name: Global, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Global.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 国内网站 Mainland
+  - {name: Mainland, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/China_Map.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 人工智能 OpenAI
+  - {name: OpenAI, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Bot.png', !!merge <<: *g, proxies: [Auto, Proxy, America], type: select}
+  - name: Copilot
+    type: select
+    icon: https://raw.githubusercontent.com/Kevkiss7758/Stash/main/Icon/CopilotLogo.png
+    proxies:
+      - Auto
+      - Proxy
+      - DIRECT
+  # 油管视频 YouTube
+  - {name: YouTube, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/YouTube.png', !!merge <<: *g, proxies: [Auto, Proxy, America], type: select}
+  # 奈飞影视 Netflix
+  - {name: Netflix, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Netflix.png', !!merge <<: *g, proxies: [Auto, Proxy, America], type: select}
+  # 迪士尼+ Disney+
+  - {name: Disney+, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Disney%2B.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # Emby Emby
+  - {name: Emby, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Emby.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 声田音乐 Spotify
+  - {name: Spotify, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Spotify.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 海外抖音 TikTok
+  - {name: TikTok, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/TikTok.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 国际媒体 Streaming
+  - {name: Streaming, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Streaming.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 电报信息 Telegram
+  - {name: Telegram, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Telegram_X.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 苹果服务 Apple
+  - {name: Apple, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Apple.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 谷歌服务 Google
+  - {name: Google, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Google.png', !!merge <<: *g, proxies: [Auto, Proxy, America], type: select}
+  # 微软服务 Microsoft
+  - {name: Microsoft, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Microsoft.png', !!merge <<: *g, proxies: [Proxy, DIRECT], type: select}
+  # 游戏平台 Games
+  - {name: Games, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Game.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 网络测试 Speedtest
+  - {name: Speedtest, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Speedtest.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 哔哩哔哩 BiliBili
+  - {name: BiliBili, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/bilibili.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 网易云音乐 NetEaseMusi
+  - {name: NetEaseMusic, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Netease_Music.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+  # 香港节点
+  - {name: HongKong, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Hong_Kong.png', !!merge <<: *u, filter: "港|🇭🇰|HK|(?i)Hong", type: url-test, use: [Gecko, DaWang]}
+  # 台湾节点
+  - {name: TaiWan, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Taiwan.png', !!merge <<: *u, filter: "台|🇨🇳|🇹🇼|湾|TW|(?i)Taiwan", type: select, use: [Gecko, DaWang]}
+  # 新加坡节点
+  - {name: Singapore, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Singapore.png', !!merge <<: *u, filter: "新加坡|坡|🇸🇬|SG|(?i)Singapore", type: url-test, use: [Gecko, DaWang]}
+  # 日本节点
+  - {name: Japan, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Japan.png', !!merge <<: *u, filter: "日|🇯🇵|东京|JP|(?i)Japan", type: url-test, use: [Gecko, DaWang]}
+  # 美国节点
+  - {name: America, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/United_States.png', !!merge <<: *u, filter: "美|🇺🇲|US|(?i)States|American", type: url-test, use: [Gecko, DaWang]}
+  # 韩国节点
+  - {name: Korea, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Korea.png', !!merge <<: *u, filter: "韩|🇰🇷|首尔|KR|(?i)Korea", type: url-test, use: [Gecko, DaWang]}
+  # 英国节点
+  - {name: UK, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/United_Kingdom.png', !!merge <<: *u, filter: "英|🇬🇧|GB|(?i)United Kingdom|UK", type: url-test, use: [Gecko, DaWang]}
+# 远程规则集
+rule-providers:
+  # 隐私网络
+  private-domain: {!!merge <<: *d, path: ./ruleset/private-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.list'}
+  private-ip: {!!merge <<: *i, path: ./ruleset/private-ip.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.list'}
+  # 网络测试
+  speedtest-domain: {!!merge <<: *d, path: ./ruleset/speedtest-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/speedtest.list'}
+  # 人工智能
+  openai-classical: {!!merge <<: *c, path: ./ruleset/openai-classical.list, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml', behavior: classical, format: yaml, interval: 86400}
+  # 油管视频
+  youtube-domain: {!!merge <<: *d, path: ./ruleset/youtube-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.list'}
+  # 奈飞影视
+  netflix-domain: {!!merge <<: *d, path: ./ruleset/netflix-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.list'}
+  netflix-ip: {!!merge <<: *i, path: ./ruleset/netflix-ip.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.list'}
+  # 迪士尼+
+  disney-domain: {!!merge <<: *d, path: ./ruleset/disney-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/disney.list'}
+  # Emby
+  emby-classical: {!!merge <<: *c, path: ./ruleset/emby-classical.list, url: 'https://raw.gitmirror.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby.list'}
+  # 动画疯
+  bahamut-domain: {!!merge <<: *d, path: ./ruleset/bahamut-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bahamut.list'}
+  # 哔哩哔哩东南亚
+  biliintl-domain: {!!merge <<: *d, path: ./ruleset/biliintl-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/biliintl.list'}
+  # 哔哩哔哩
+  bilibili-domain: {!!merge <<: *d, path: ./ruleset/bilibili-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bilibili.list'}
+  bilibili-ip: {!!merge <<: *i, path: ./ruleset/bilibili-ip.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/bilibili.list'}
+  # 声田音乐
+  spotify-domain: {!!merge <<: *d, path: ./ruleset/spotify-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.list'}
+  # 网易云音乐
+  neteasemusic-classical: {!!merge <<: *c, path: ./ruleset/neteasemusic-classical.list, url: 'https://raw.gitmirror.com/blackmatrix7/ios_rule_script/master/rule/Clash/NetEaseMusic/NetEaseMusic.list'}
+  # 海外抖音
+  tiktok-domain: {!!merge <<: *d, path: ./ruleset/tiktok-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.list'}
+  # 国际媒体
+  streamingmedia-classical: {!!merge <<: *c, path: ./ruleset/streamingmedia-classical.list, url: 'https://raw.gitmirror.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.list'}
+  # 电报信息
+  telegram-domain: {!!merge <<: *d, path: ./ruleset/telegram-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.list'}
+  telegram-ip: {!!merge <<: *i, path: ./ruleset/telegram-ip.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.list'}
+  # GitHub
+  github-domain: {!!merge <<: *d, path: ./ruleset/github-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.list'}
+  # Twitter
+  twitter-domain: {!!merge <<: *d, path: ./ruleset/twitter-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.list'}
+  twitter-ip: {!!merge <<: *i, path: ./ruleset/twitter-ip.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.list'}
+  # TestFlight
+  testflight-classical: {!!merge <<: *c, path: ./ruleset/testflight-classical.list, url: 'https://raw.gitmirror.com/blackmatrix7/ios_rule_script/master/rule/Clash/TestFlight/TestFlight.list'}
+  # 苹果服务
+  apple-domain: {!!merge <<: *d, path: ./ruleset/apple-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.list'}
+  apple-ip: {!!merge <<: *i, path: ./ruleset/apple-ip.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/apple.list'}
+  # 谷歌服务
+  google-domain: {!!merge <<: *d, path: ./ruleset/google-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.list'}
+  google-ip: {!!merge <<: *i, path: ./ruleset/google-ip.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.list'}
+  # 微软服务
+  microsoft-domain: {!!merge <<: *d, path: ./ruleset/microsoft-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.list'}
+  # 游戏平台
+  games-classical: {!!merge <<: *c, path: ./ruleset/games-classical.list, url: 'https://raw.gitmirror.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.list'}
+  # 国内网站
+  cn-domain: {!!merge <<: *d, path: ./ruleset/cn-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geosite/cn.list'}
+  # 国外网站
+  proxy-domain: {!!merge <<: *d, path: ./ruleset/proxy-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.list'}
+  copilot-classical:
+    behavior: classical
+    format: yaml
+    interval: 0
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml
+# 分流规则引用
+rules:
+  - RULE-SET,copilot-classical,Copilot
+  #  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
+  #  - SCRIPT,quic,REJECT
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,yacd.metacubex.one,DIRECT
+  - DOMAIN,yacd.haishan.me,DIRECT
+  - DOMAIN,d.metacubex.one,DIRECT
+  - DOMAIN-SUFFIX,gitmirror.com,Global
+  - DOMAIN-SUFFIX,ziffstatic.com,Speedtest
+  - RULE-SET,private-domain,DIRECT
+  - RULE-SET,speedtest-domain,Speedtest
+  - RULE-SET,openai-classical,OpenAI
+  - RULE-SET,youtube-domain,YouTube
+  - RULE-SET,netflix-domain,Netflix
+  - RULE-SET,disney-domain,Disney+
+  - RULE-SET,emby-classical,Emby
+  - RULE-SET,bahamut-domain,TaiWan
+  - RULE-SET,biliintl-domain,Streaming
+  - RULE-SET,bilibili-domain,BiliBili
+  - RULE-SET,spotify-domain,Spotify
+  - RULE-SET,neteasemusic-classical,NetEaseMusic
+  - RULE-SET,tiktok-domain,TikTok
+  - RULE-SET,streamingmedia-classical,Streaming
+  - RULE-SET,telegram-domain,Telegram
+  - RULE-SET,github-domain,Global
+  - RULE-SET,twitter-domain,Global
+  - RULE-SET,testflight-classical,Global
+  - RULE-SET,apple-domain,Apple
+  - RULE-SET,google-domain,Google
+  - RULE-SET,microsoft-domain,Microsoft
+  - RULE-SET,games-classical,Games
+  - RULE-SET,proxy-domain,Global
+  - RULE-SET,google-ip,Google
+  - RULE-SET,netflix-ip,Netflix
+  - RULE-SET,telegram-ip,Telegram
+  - RULE-SET,twitter-ip,Global
+  - RULE-SET,cn-domain,Mainland
+  - RULE-SET,bilibili-ip,BiliBili
+  - RULE-SET,apple-ip,Apple
+  - RULE-SET,private-ip,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,Final
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
+subscribe-url: http://www.geckopath.com/api/v1/client/subscribe?token=967aeb6cc4cc57ee5bd6057351b63e86
