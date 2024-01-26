@@ -36,8 +36,23 @@ u: &u {type: select, use: [Subscribe]}
 proxies: null
 # 远程订阅
 proxy-providers:
-  Gecko:{!!merge <<: *p, path: ./proxy_providers/subscribe.yaml, url: "http://www.geckopath.com/api/v1/client/subscribe?token=967aeb6cc4cc57ee5bd6057351b63e86", benchmark-url: 'http://www.apple.com/library/test/success.html', interval: 42300}
-  DaWang:{!!merge <<: *p, path: ./proxy_providers/subscribe.yaml, url: "https://dawangidc.org/modules/servers/UnlimitedSocks/dawang.php?sid=12661&token=8PYgRvky2hj5", benchmark-url: 'http://www.apple.com/library/test/success.html', interval: 42300}
+Gecko:
+    url: "http://geckopath.com/api/v1/client/subscribe?token=967aeb6cc4cc57ee5bd6057351b63e86"
+    # 使用Clash类型订阅链接替换掉引号""内的链接使用。
+    # 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
+    interval: 86400
+    health-check:
+      enable: true
+      interval: 300
+      url: http://www.apple.com/library/test/success.html
+    benchmark-url: http://www.apple.com/library/test/success.html
+  DaWang:
+    interval: 86400
+    url: https://dawangidc.org/modules/servers/UnlimitedSocks/dawang.php?sid=12661&token=8PYgRvky2hj5
+
+
+ # Gecko:{!!merge <<: *p, path: ./proxy_providers/subscribe.yaml, url: "http://www.geckopath.com/api/v1/client/subscribe?token=967aeb6cc4cc57ee5bd6057351b63e86", benchmark-url: 'http://www.apple.com/library/test/success.html', interval: 42300}
+ # DaWang:{!!merge <<: *p, path: ./proxy_providers/subscribe.yaml, url: "https://dawangidc.org/modules/servers/UnlimitedSocks/dawang.php?sid=12661&token=8PYgRvky2hj5", benchmark-url: 'http://www.apple.com/library/test/success.html', interval: 42300}
   
 # 1. 请使用Clash类型订阅链接填入引号""内使用,
 # 2. 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
