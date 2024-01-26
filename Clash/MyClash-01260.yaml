@@ -71,7 +71,7 @@ proxy-groups:
   # 人工智能 OpenAI
   - {name: OpenAI, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/Bot.png', !!merge <<: *g, proxies: [Auto, Proxy, America], type: select} 
   # 人工智能 Copilot
-   - {name: Copilot, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/CopilotLogo.png', !!merge <<: *g, proxies: [Auto, Proxy, DIRECT], type: select}
+   - {name: Copilot, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/CopilotLogo.png', !!merge <<: *g, proxies: [Auto, Proxy, America], type: select}
   # 油管视频 YouTube
   - {name: YouTube, icon: 'https://github.com/Kevkiss7758/Stash/raw/main/Icon/YouTube.png', !!merge <<: *g, proxies: [Auto, Proxy, America], type: select}
   # 奈飞影视 Netflix
