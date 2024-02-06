@@ -33,7 +33,7 @@ u: &u {type: select, use: [Subscribe]}
 ######### 锚点 end #########
 
 # 本地服务器
-proxies: null
+proxies: 
 # 远程订阅
 proxy-providers:
   Gecko: {!!merge <<: *p, path: ./proxy_providers/subscribe.yaml, url: "http://www.geckopath.com/api/v1/client/subscribe?token=967aeb6cc4cc57ee5bd6057351b63e86", benchmark-url: 'http://www.apple.com/library/test/success.html', interval: 42300}
