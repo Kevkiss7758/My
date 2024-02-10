@@ -548,7 +548,7 @@ proxy-groups:
       - 🇯🇵 DaWang-JP-Tokyo6
       - 🇯🇵 DaWang-JP-Tokyo7
       - 🇯🇵 DaWang-JP-Tokyo8
-  - name: 🇺🇲 美国节点
+  - name: 🇺🇸 美国节点
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 300
@@ -624,7 +624,7 @@ proxy-groups:
     interval: 300
     tolerance: 50
     proxies:
-      - 🇬🇧 粤英隧道UK_IP1(倍率:1)     
+      - 🇬🇧 粤英隧道UK_IP1(倍率:1)
  - name: 🇰🇷 韩国节点
     type: url-test
     url: http://www.gstatic.com/generate_204
@@ -633,9 +633,6 @@ proxy-groups:
     proxies:
       - 🇰🇷 DaWang-KR-Seoul1
       - 🇰🇷 DaWang-KR-Seoul2
-
-
-
 rules:
   - DOMAIN-SUFFIX,acl4.ssr,🎯 全球直连
   - DOMAIN-SUFFIX,ip6-localhost,🎯 全球直连
@@ -735,7 +732,7 @@ rules:
   - DOMAIN-SUFFIX,8ox.cn,🛑 广告拦截
   - DOMAIN-SUFFIX,95558000.com,🛑 广告拦截
   - DOMAIN-SUFFIX,99click.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,99youmeng.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,99yoeng.com,🛑 广告拦截
   - DOMAIN-SUFFIX,a3p4.net,🛑 广告拦截
   - DOMAIN-SUFFIX,acs86.com,🛑 广告拦截
   - DOMAIN-SUFFIX,acxiom-online.com,🛑 广告拦截
@@ -866,7 +863,7 @@ rules:
   - DOMAIN-SUFFIX,dotmore.com.tw,🛑 广告拦截
   - DOMAIN-SUFFIX,doubleverify.com,🛑 广告拦截
   - DOMAIN-SUFFIX,doudouguo.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,doumob.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,doob.com,🛑 广告拦截
   - DOMAIN-SUFFIX,duanat.com,🛑 广告拦截
   - DOMAIN-SUFFIX,duiba.com.cn,🛑 广告拦截
   - DOMAIN-SUFFIX,duomeng.cn,🛑 广告拦截
@@ -888,9 +885,9 @@ rules:
   - DOMAIN-SUFFIX,go-mpulse,🛑 广告拦截
   - DOMAIN-SUFFIX,go-mpulse.net,🛑 广告拦截
   - DOMAIN-SUFFIX,godloveme.cn,🛑 广告拦截
-  - DOMAIN-SUFFIX,gridsum.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,gridsumdissector.cn,🛑 广告拦截
-  - DOMAIN-SUFFIX,gridsumdissector.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,grids.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,gridsdissector.cn,🛑 广告拦截
+  - DOMAIN-SUFFIX,gridsdissector.com,🛑 广告拦截
   - DOMAIN-SUFFIX,growingio.com,🛑 广告拦截
   - DOMAIN-SUFFIX,guohead.com,🛑 广告拦截
   - DOMAIN-SUFFIX,guomob.com,🛑 广告拦截
@@ -999,7 +996,7 @@ rules:
   - DOMAIN-SUFFIX,qtmojo.com,🛑 广告拦截
   - DOMAIN-SUFFIX,quantcount.com,🛑 广告拦截
   - DOMAIN-SUFFIX,qucaigg.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,qumi.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,qi.com,🛑 广告拦截
   - DOMAIN-SUFFIX,qxxys.com,🛑 广告拦截
   - DOMAIN-SUFFIX,reachmax.cn,🛑 广告拦截
   - DOMAIN-SUFFIX,responsys.net,🛑 广告拦截
@@ -1045,9 +1042,9 @@ rules:
   - DOMAIN-SUFFIX,ugvip.com,🛑 广告拦截
   - DOMAIN-SUFFIX,ujian.cc,🛑 广告拦截
   - DOMAIN-SUFFIX,ukeiae.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,umeng.co,🛑 广告拦截
-  - DOMAIN-SUFFIX,umeng.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,umtrack.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,eng.co,🛑 广告拦截
+  - DOMAIN-SUFFIX,eng.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,track.com,🛑 广告拦截
   - DOMAIN-SUFFIX,unimhk.com,🛑 广告拦截
   - DOMAIN-SUFFIX,union-wifi.com,🛑 广告拦截
   - DOMAIN-SUFFIX,union001.com,🛑 广告拦截
@@ -1075,7 +1072,7 @@ rules:
   - DOMAIN-SUFFIX,wooboo.com.cn,🛑 广告拦截
   - DOMAIN-SUFFIX,wqmobile.com,🛑 广告拦截
   - DOMAIN-SUFFIX,wrating.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,wumii.cn,🛑 广告拦截
+  - DOMAIN-SUFFIX,wii.cn,🛑 广告拦截
   - DOMAIN-SUFFIX,xcy8.com,🛑 广告拦截
   - DOMAIN-SUFFIX,xdrig.com,🛑 广告拦截
   - DOMAIN-SUFFIX,xiaozhen.com,🛑 广告拦截
@@ -1093,7 +1090,7 @@ rules:
   - DOMAIN-SUFFIX,ymcdn.cn,🛑 广告拦截
   - DOMAIN-SUFFIX,yongyuelm.com,🛑 广告拦截
   - DOMAIN-SUFFIX,yooli.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,youmi.net,🛑 广告拦截
+  - DOMAIN-SUFFIX,yoi.net,🛑 广告拦截
   - DOMAIN-SUFFIX,youxiaoad.com,🛑 广告拦截
   - DOMAIN-SUFFIX,yoyi.com.cn,🛑 广告拦截
   - DOMAIN-SUFFIX,yoyi.tv,🛑 广告拦截
@@ -1128,7 +1125,7 @@ rules:
   - DOMAIN-SUFFIX,admedia.com,🛑 广告拦截
   - DOMAIN-SUFFIX,adnxs.com,🛑 广告拦截
   - DOMAIN-SUFFIX,adotmob.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,adperium.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,adperi.com,🛑 广告拦截
   - DOMAIN-SUFFIX,adriver.ru,🛑 广告拦截
   - DOMAIN-SUFFIX,adroll.com,🛑 广告拦截
   - DOMAIN-SUFFIX,adsco.re,🛑 广告拦截
@@ -1163,7 +1160,7 @@ rules:
   - DOMAIN-SUFFIX,criteo.net,🛑 广告拦截
   - DOMAIN-SUFFIX,csbew.com,🛑 广告拦截
   - DOMAIN-SUFFIX,directrev.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,dumedia.ru,🛑 广告拦截
+  - DOMAIN-SUFFIX,dedia.ru,🛑 广告拦截
   - DOMAIN-SUFFIX,effectivemeasure.com,🛑 广告拦截
   - DOMAIN-SUFFIX,effectivemeasure.net,🛑 广告拦截
   - DOMAIN-SUFFIX,eqads.com,🛑 广告拦截
@@ -1228,7 +1225,7 @@ rules:
   - DOMAIN-SUFFIX,powerlinks.com,🛑 广告拦截
   - DOMAIN-SUFFIX,propellerads.com,🛑 广告拦截
   - DOMAIN-SUFFIX,quantserve.com,🛑 广告拦截
-  - DOMAIN-SUFFIX,rayjump.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,rayjp.com,🛑 广告拦截
   - DOMAIN-SUFFIX,revdepo.com,🛑 广告拦截
   - DOMAIN-SUFFIX,rubiconproject.com,🛑 广告拦截
   - DOMAIN-SUFFIX,sape.ru,🛑 广告拦截
@@ -1767,7 +1764,7 @@ rules:
   - DOMAIN-SUFFIX,t-flow.flyme.cn,🍃 应用净化
   - DOMAIN-SUFFIX,tongji-res1.meizu.com,🍃 应用净化
   - DOMAIN-SUFFIX,tongji.meizu.com,🍃 应用净化
-  - DOMAIN-SUFFIX,umid.orion.meizu.com,🍃 应用净化
+  - DOMAIN-SUFFIX,id.orion.meizu.com,🍃 应用净化
   - DOMAIN-SUFFIX,upush.res.meizu.com,🍃 应用净化
   - DOMAIN-SUFFIX,uxip.meizu.com,🍃 应用净化
   - DOMAIN-SUFFIX,a.koudai.com,🍃 应用净化
@@ -1828,7 +1825,7 @@ rules:
   - DOMAIN,splashqqlive.gtimg.com,🍃 应用净化
   - DOMAIN,wa.gtimg.com,🍃 应用净化
   - DOMAIN,wxsnsdy.wxs.qq.com,🍃 应用净化
-  - DOMAIN,wxsnsdythumb.wxs.qq.com,🍃 应用净化
+  - DOMAIN,wxsnsdythb.wxs.qq.com,🍃 应用净化
   - DOMAIN-SUFFIX,act.qq.com,🍃 应用净化
   - DOMAIN-SUFFIX,ad.qun.qq.com,🍃 应用净化
   - DOMAIN-SUFFIX,adsfile.qq.com,🍃 应用净化
@@ -2091,7 +2088,7 @@ rules:
   - DOMAIN-SUFFIX,pv.sogou.com,🍃 应用净化
   - DOMAIN-SUFFIX,pv.sohu.com,🍃 应用净化
   - DOMAIN-SUFFIX,theta.sogoucdn.com,🍃 应用净化
-  - DOMAIN-SUFFIX,um.hd.sohu.com,🍃 应用净化
+  - DOMAIN-SUFFIX,.hd.sohu.com,🍃 应用净化
   - DOMAIN-SUFFIX,uranus.sogou.com,🍃 应用净化
   - DOMAIN-SUFFIX,uranus.sohu.com,🍃 应用净化
   - DOMAIN-SUFFIX,wan.sohu.com,🍃 应用净化
@@ -2196,7 +2193,7 @@ rules:
   - DOMAIN-SUFFIX,afp.wasu.tv,🍃 应用净化
   - DOMAIN-SUFFIX,c.algovid.com,🍃 应用净化
   - DOMAIN-SUFFIX,gg.jtertp.com,🍃 应用净化
-  - DOMAIN-SUFFIX,gridsum-vd.cntv.cn,🍃 应用净化
+  - DOMAIN-SUFFIX,grids-vd.cntv.cn,🍃 应用净化
   - DOMAIN-SUFFIX,kwflvcdn.000dn.com,🍃 应用净化
   - DOMAIN-SUFFIX,logstat.t.sfht.com,🍃 应用净化
   - DOMAIN-SUFFIX,match.rtbidder.net,🍃 应用净化
@@ -2216,7 +2213,7 @@ rules:
   - DOMAIN-SUFFIX,806.tianyaui.cn,🍃 应用净化
   - DOMAIN-SUFFIX,808.tianya.cn,🍃 应用净化
   - DOMAIN-SUFFIX,808.tianyaui.cn,🍃 应用净化
-  - DOMAIN-SUFFIX,92x.tumblr.com,🍃 应用净化
+  - DOMAIN-SUFFIX,92x.tblr.com,🍃 应用净化
   - DOMAIN-SUFFIX,a1.itc.cn,🍃 应用净化
   - DOMAIN-SUFFIX,ad-channel.wikawika.xyz,🍃 应用净化
   - DOMAIN-SUFFIX,ad-display.wikawika.xyz,🍃 应用净化
@@ -2275,7 +2272,7 @@ rules:
   - DOMAIN-SUFFIX,hosting.miarroba.info,🍃 应用净化
   - DOMAIN-SUFFIX,iadsdk.apple.com,🍃 应用净化
   - DOMAIN-SUFFIX,image.gentags.com,🍃 应用净化
-  - DOMAIN-SUFFIX,its-dori.tumblr.com,🍃 应用净化
+  - DOMAIN-SUFFIX,its-dori.tblr.com,🍃 应用净化
   - DOMAIN-SUFFIX,log.outbrain.com,🍃 应用净化
   - DOMAIN-SUFFIX,m.12306media.com,🍃 应用净化
   - DOMAIN-SUFFIX,media.cheshi-img.com,🍃 应用净化
@@ -2557,7 +2554,7 @@ rules:
   - DOMAIN,steamusercontent-a.akamaihd.net,🎮 游戏平台
   - DOMAIN,steamuserimages-a.akamaihd.net,🎮 游戏平台
   - DOMAIN-SUFFIX,fanatical.com,🎮 游戏平台
-  - DOMAIN-SUFFIX,humblebundle.com,🎮 游戏平台
+  - DOMAIN-SUFFIX,hblebundle.com,🎮 游戏平台
   - DOMAIN-SUFFIX,playartifact.com,🎮 游戏平台
   - DOMAIN-SUFFIX,steam-chat.com,🎮 游戏平台
   - DOMAIN-SUFFIX,steamcommunity.com,🎮 游戏平台
@@ -2748,7 +2745,7 @@ rules:
   - DOMAIN,aod-dash-uk-live.akamaized.net,🌍 国外媒体
   - DOMAIN,aod-hls-uk-live.akamaized.net,🌍 国外媒体
   - DOMAIN,vod-dash-uk-live.akamaized.net,🌍 国外媒体
-  - DOMAIN,vod-thumb-uk-live.akamaized.net,🌍 国外媒体
+  - DOMAIN,vod-thb-uk-live.akamaized.net,🌍 国外媒体
   - DOMAIN-SUFFIX,bbc.co,🌍 国外媒体
   - DOMAIN-SUFFIX,bbc.co.uk,🌍 国外媒体
   - DOMAIN-SUFFIX,bbc.com,🌍 国外媒体
@@ -2968,7 +2965,7 @@ rules:
   - DOMAIN-SUFFIX,phncdn.com,🌍 国外媒体
   - DOMAIN-SUFFIX,phprcdn.com,🌍 国外媒体
   - DOMAIN-SUFFIX,pornhub.com,🌍 国外媒体
-  - DOMAIN-SUFFIX,pornhubpremium.com,🌍 国外媒体
+  - DOMAIN-SUFFIX,pornhubpremi.com,🌍 国外媒体
   - DOMAIN-SUFFIX,qobuz.com,🌍 国外媒体
   - DOMAIN-SUFFIX,p-cdn.us,🌍 国外媒体
   - DOMAIN-SUFFIX,sndcdn.com,🌍 国外媒体
@@ -3050,7 +3047,7 @@ rules:
   - DOMAIN-SUFFIX,ping.pe,🚀 节点选择
   - DOMAIN-SUFFIX,reddit.com,🚀 节点选择
   - DOMAIN-SUFFIX,teddysun.com,🚀 节点选择
-  - DOMAIN-SUFFIX,tumbex.com,🚀 节点选择
+  - DOMAIN-SUFFIX,tbex.com,🚀 节点选择
   - DOMAIN-SUFFIX,twdvd.com,🚀 节点选择
   - DOMAIN-SUFFIX,unsplash.com,🚀 节点选择
   - DOMAIN-SUFFIX,buzzsprout.com,🚀 节点选择
@@ -3093,7 +3090,7 @@ rules:
   - DOMAIN-SUFFIX,100ke.org,🚀 节点选择
   - DOMAIN-SUFFIX,10beasts.net,🚀 节点选择
   - DOMAIN-SUFFIX,10conditionsoflove.com,🚀 节点选择
-  - DOMAIN-SUFFIX,10musume.com,🚀 节点选择
+  - DOMAIN-SUFFIX,10muse.com,🚀 节点选择
   - DOMAIN-SUFFIX,123rf.com,🚀 节点选择
   - DOMAIN-SUFFIX,12bet.com,🚀 节点选择
   - DOMAIN-SUFFIX,12vpn.com,🚀 节点选择
@@ -3119,7 +3116,7 @@ rules:
   - DOMAIN-SUFFIX,1991way.com,🚀 节点选择
   - DOMAIN-SUFFIX,1998cdp.org,🚀 节点选择
   - DOMAIN-SUFFIX,1bao.org,🚀 节点选择
-  - DOMAIN-SUFFIX,1dumb.com,🚀 节点选择
+  - DOMAIN-SUFFIX,1db.com,🚀 节点选择
   - DOMAIN-SUFFIX,1e100.net,🚀 节点选择
   - DOMAIN-SUFFIX,1eew.com,🚀 节点选择
   - DOMAIN-SUFFIX,1mobile.com,🚀 节点选择
@@ -3155,7 +3152,7 @@ rules:
   - DOMAIN-SUFFIX,3proxy.ru,🚀 节点选择
   - DOMAIN-SUFFIX,3ren.ca,🚀 节点选择
   - DOMAIN-SUFFIX,3tui.net,🚀 节点选择
-  - DOMAIN-SUFFIX,404museum.com,🚀 节点选择
+  - DOMAIN-SUFFIX,404muse.com,🚀 节点选择
   - DOMAIN-SUFFIX,43110.cf,🚀 节点选择
   - DOMAIN-SUFFIX,466453.com,🚀 节点选择
   - DOMAIN-SUFFIX,4bluestones.biz,🚀 节点选择
