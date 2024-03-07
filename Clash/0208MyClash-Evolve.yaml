@@ -112,7 +112,7 @@ rule-providers:
   # 网络测试
   speedtest-domain: {!!merge <<: *d, path: ./ruleset/speedtest-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/speedtest.list'}
   # 人工智能
-  openai-classical: {!!merge <<: *c, path: ./ruleset/openai-classical.list, url: 'https://raw.gitmirror.com/Coldvvater/Mononoke/master/Stash/RuleSet/AI.yaml', behavior: classical, format: yaml, interval: 86400}
+  openai-classical: {!!merge <<: *c, path: ./ruleset/openai-classical.list, url: 'https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/AI.yaml', behavior: classical, format: yaml, interval: 86400}
   # 油管视频
   youtube-domain: {!!merge <<: *d, path: ./ruleset/youtube-domain.list, url: 'https://raw.gitmirror.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.list'}
   # 奈飞影视
